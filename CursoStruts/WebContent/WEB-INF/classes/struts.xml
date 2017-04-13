@@ -3,7 +3,7 @@
    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
    "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-   <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+	
    <constant name="struts.devMode" value="true" />
    <package name="default" extends="struts-default">
      <default-action-ref name="home" />
@@ -13,8 +13,9 @@
       
       <action name="hello" class= "cursostrus.HelloWorld">
             <result>/WEB-INF/pages/hello.jsp</result>
-      </action>
-      
-   </package>
-   <include file="struts-cursostrus" />
+      </action>      
+   </package>   
+   
+   <include file="struts-cursostrus.xml" />
+   
 </struts>

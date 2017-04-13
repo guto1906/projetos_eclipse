@@ -9,10 +9,6 @@
 <title>Formulário - Calcula Idade</title>
 </head>
 <body>
-  <s:form namespace="/aula04" action="calcularIdade" method="post">
-    <s:textfield label="Nome" name="nmNome" />
-    <s:textfield label="Data Nacimento" name="dtNacimento" />
-    <s:submit value="Calcular Idade" />
-  </s:form>
+  <p>Caro(a) <s:property value = "nmNome"/> você têm <s:property value = "idade"/> ano(s)</p>
 </body>
 </html>

@@ -6,13 +6,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Formulário - Calcula Idade</title>
+<title>Login</title>
 </head>
 <body>
-  <s:form namespace="/aula04" action="calcularIdade" method="post">
-    <s:textfield label="Nome" name="nmNome" />
-    <s:textfield label="Data Nacimento" name="dtNacimento" />
-    <s:submit value="Calcular Idade" />
+<p style="color:red"><s:property value="mensagemErro"/></p>
+
+  <s:form namespace="/aula05" action="login" method="post">
+    <s:textfield label="Login" name="login" />
+    <s:password label="Senha" name="senha" />
+    <s:submit value="LOGIN" />
   </s:form>
 </body>
 </html>

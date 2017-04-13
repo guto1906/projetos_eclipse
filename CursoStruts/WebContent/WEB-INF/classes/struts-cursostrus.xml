@@ -5,7 +5,17 @@
 <struts>
  <package name="aula04" extends="default" namespace="/aula04">
    <action name="calcularIdade!*" class="aula04.CalcularIdade" method="{1}">
-     <result name="input">/WEB-INF/pages/aula04/form.jsp</result>     
+     <result name="input">/WEB-INF/pages/aula04/form.jsp</result>
+     <result name="success">/WEB-INF/pages/aula04/resultado.jsp</result>          
+   </action> 
+ </package>
+ 
+ <package name="aula05" extends="default" namespace="/aula05">
+   <action name="login!*" class="aula05.loginAction" method="{1}">
+     <result name="input">/WEB-INF/pages/aula05/form.jsp</result>
+     <result name="desenvolvedor">/WEB-INF/pages/aula05/desenvolvedorHome.jsp</result> 
+     <result name="gerente">/WEB-INF/pages/aula05/gerenteHome.jsp</result>
+     <result name="diretor">/WEB-INF/pages/aula05/diretorHome.jsp</result>         
    </action> 
  </package>
    

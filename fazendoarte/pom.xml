@@ -14,7 +14,7 @@
 	<!-- Parâmetros de execução -->
 	<build>
 		<!-- Nome do projeto empacotado -->
-		<finalName>FazendoArte</finalName>
+		<finalName>fazendoarte</finalName>
 
 		<!-- Plugins -->
 		<plugins>
@@ -51,6 +51,20 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
+		</dependency>
+
+		<!-- JSF Mojarra -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.faces</artifactId>
+			<version>2.2.12</version>
+		</dependency>
+
+		<!-- Prime Faces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.1</version>
 		</dependency>
 
 

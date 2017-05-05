@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<!-- Dados da Conexão -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/fazendoarte?useSSL=false</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">gut019o6</property>
+
+		<!-- Numero de Conexoes -->
+		<property name="connection.pool_size">1</property>
+
+		<!-- Dialeto do banco -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+		<!-- Gerenciamento do Contexto das seções -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- Cache de Segundo Nível desabilitada -->
+		<property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Mostrar os SQL gerados -->
+		<property name="show_sql">true</property>
+
+		<!-- Cria as tabelas -->
+		<property name="hbm2ddl.auto">validate</property>
+		
+		<!-- Mapear as entidades -->
+		<mapping class="br.com.fazendoarte.domain.Cidade"/>
+		<mapping class="br.com.fazendoarte.domain.Cliente"/>			
+		<mapping class="br.com.fazendoarte.domain.Estado"/>		
+		<mapping class="br.com.fazendoarte.domain.Fabricante"/>
+		<mapping class="br.com.fazendoarte.domain.Funcionario"/>
+		<mapping class="br.com.fazendoarte.domain.ItemVenda"/>
+		<mapping class="br.com.fazendoarte.domain.Pessoa"/>	
+		<mapping class="br.com.fazendoarte.domain.Produto"/>
+		<mapping class="br.com.fazendoarte.domain.Usuario"/>
+		<mapping class="br.com.fazendoarte.domain.Venda"/>
+			
+
+	</session-factory>
+</hibernate-configuration>

@@ -59,7 +59,7 @@ public class EstadoDAOTeste {
 	@Test
 	@Ignore
 	public void excluir() {
-		Long codigo = 4L;
+		Long codigo = 7L;
 		EstadoDAO e = new EstadoDAO();
 		Estado estado = e.buscar(codigo);
 		if (estado != null) {
@@ -70,6 +70,7 @@ public class EstadoDAOTeste {
 	}
 	
 	@Test
+	@Ignore
 	public void editar() {
 		Long codigo = 5L;
 		EstadoDAO e = new EstadoDAO();

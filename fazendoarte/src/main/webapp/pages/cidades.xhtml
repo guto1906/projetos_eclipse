@@ -6,38 +6,101 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Estados</title>
+	<title>Cidades</title>
 </h:head>
 <h:body>
-	<h:form>
-		<p:panel header="Estados - Listagem">
+	<p:growl id="msgGrowl" />
+	<h:form id="formLista">
+		<p:panel header="Cidades - Listagem">
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
+				paginator="true" value="#{cidadeBean.cidades}" var="cidade" rows="5"
+				id="tableLista">
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dlgEstado').show();" />
+					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo()}"
+						oncomplete="PF('dlgCidade').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 				<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dlgEstado').show();" />
+					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo()}"
+						oncomplete="PF('dlgCidade').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
-				<p:column headerText="Nome"></p:column>
-				<p:column headerText="Sigla"></p:column>
-				<p:column headerText="Opções"></p:column>
+				<p:column headerText="Codigo" sortBy="#{cidade.codigo}">
+					<h:outputText value="#{cidade.codigo}" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{cidade.nome}"
+					filterBy="#{cidade.nome}">
+					<h:outputText value="#{cidade.nome}" />
+				</p:column>
+				<p:column headerText="Estado" sortBy="#{cidade.estado.sigla}"
+					filterBy="#{cidade.estado.sigla}">
+					<h:outputText value="#{cidade.estado.sigla}" />
+				</p:column>
+				<!-- Botões Editar e Excluir -->
+					<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-pencil"
+						oncomplete="PF('dlgCidade').show();"
+						actionListener="#{cidadeBean.editar}"
+						update=":msgGrowl :formCadastro:gridCadastro">
+						<f:attribute name="cidadeEditar" value="#{cidade}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+					
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{cidadeBean.excluir}"
+						update=":msgGrowl :formLista:tableLista">
+						<p:confirm header="Alerta"
+							message="Deseja excluir #{cidade.nome}?" icon="ui-icon-alert" />
+						<f:attribute name="cidadeExcluir" value="#{cidade}" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
+			
+			<!-- Diálogo de Confirmação -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
 		</p:panel>
+		<!-- Fomulario nova Cidades -->
 	</h:form>
-	<p:dialog header="Estado - Cadastro" widgetVar="dlgEstado"
+	<p:dialog header="Cidade - Cadastro" widgetVar="dlgCidade"
 		draggable="false" resizable="false" modal="true" closable="false">
-		<h:form>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="Nome: " />
-				<p:inputText value="" size="30" maxlength="50" />
-				<p:outputLabel value="Sigla: " />
-				<p:inputText value="" size="10" maxlength="2" />
+		<h:form id="formCadastro">
+			<h:panelGrid columns="2" id="gridCadastro">
+				<p:outputLabel value="Nome: " for="nm_Nome" />
+				<p:inputText size="30" maxlength="50"
+					value="#{cidadeBean.cidade.nome}" required="true"
+					requiredMessage="O Nome é obrigatório" id="nm_Nome" />
+
+				<p:outputLabel value="Estado: " for="nm_Estado" />
+				<!-- DropDownBox Estados -->
+				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="O estado é obrigtório" id="nm_Estado">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Estado" />
+					<f:selectItems value="#{cidadeBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome}" />
+				</p:selectOneMenu>
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton value="SALVAR" />
+				<p:commandButton value="SALVAR"
+					actionListener="#{cidadeBean.salvar}"
+					update=":msgGrowl :formCadastro:gridCadastro :formLista:tableLista">
+				</p:commandButton>
 				<p:commandButton value="CANCELAR"
-					oncomplete="PF('dlgEstado').hide();" />
+					oncomplete="PF('dlgCidade').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

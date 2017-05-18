@@ -11,11 +11,11 @@ public class ProdutoDAOTeste {
 	@Test
 	public void salvar(){
 		Long codigoFabricante1 = 1L;
-		Long codigoFabricante2 = 2L;
+		//Long codigoFabricante2 = 2L;
 		Long codigoFabricante3 = 3L;
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
 		Fabricante fabricante1 = fabricanteDAO.buscar(codigoFabricante1);
-		Fabricante fabricante2 = fabricanteDAO.buscar(codigoFabricante2);
+		//Fabricante fabricante2 = fabricanteDAO.buscar(codigoFabricante2);
 		Fabricante fabricante3 = fabricanteDAO.buscar(codigoFabricante3);
 		
 		

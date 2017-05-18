@@ -7,8 +7,8 @@
 		<!-- Dados da Conexão -->
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/fazendoarte?useSSL=false</property>
-		<property name="connection.username">root</property>
-		<property name="connection.password">gut019o6</property>
+		<property name="connection.username">fazendoarte</property>
+		<property name="connection.password">edasiv</property>
 
 		<!-- Numero de Conexoes -->
 		<property name="connection.pool_size">1</property>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Pessoas</title>
+</h:head>
+<h:body>
+	<p:growl id="msgGrowl" />
+	<h:form id="formLista">
+		<p:panel header="Pessoas - Listagem">
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{pessoaBean.pessoas}" var="pessoa" rows="5"
+				id="tableLista">
+				<!-- Botoes Novo -->
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{pessoaBean.novo()}"
+						oncomplete="PF('dlgPessoa').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+				<f:facet name="footer">
+					<p:commandButton value="Novo" actionListener="#{pessoaBean.novo()}"
+						oncomplete="PF('dlgPessoa').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{pessoa.codigo}"
+					filterBy="#{produto.codigo}">
+					<h:outputText value="#{pessoa.codigo}" />
+				</p:column>
+				<p:column headerText="Nome" sortBy="#{pessoa.nome}"
+					filterBy="#{pessoa.nome}">
+					<h:outputText value="#{pessoa.nome}" />
+				</p:column>
+				<p:column headerText="CPF" sortBy="#{pessoa.cpf}"
+					filterBy="#{pessoa.cpf}">
+					<h:outputText value="#{pessoa.cpf}" />
+				</p:column>
+				<p:column headerText="RG" sortBy="#{pessoa.rg}"
+					filterBy="#{pessoa.rg}">
+					<h:outputText value="#{pessoa.rg}" />
+				</p:column>
+
+
+				<!-- Botões Editar e Excluir -->
+				<p:column headerText="Opções">
+					<p:commandButton value="Editar"
+						actionListener="#{pessoaBean.editar()}"
+						oncomplete="PF('dlgPessoa').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:attribute name="pessoaEditar" value="#{pessoa}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+
+					<p:commandButton value="Excluir"
+						actionListener="#{pessoaBean.excluir()}"
+						update="formLista:tableLista :msgGrowl">
+						<p:confirm header="Alerta"
+							message="Deseja excluir #{pessoa.nome}?" icon="ui-icon-alert" />
+						<f:attribute name="pessoaExcluir" value="#{pessoa}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<!-- Diálogo de Confirmação -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</p:panel>
+	</h:form>
+	<p:dialog header="Pessoa - Cadastro" widgetVar="dlgPessoa"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<!-- Cadastro novas Pessoas -->
+		<h:form id="formCadastro">
+			<h:panelGrid columns="2" id="gridCadastro">
+				<p:outputLabel value="Nome: " for="formNome" />
+				<p:inputText value="#{pessoaBean.pessoa.nome}" size="30"
+					maxlength="50" required="true"
+					requiredMessage="Nome da pessoa é obrigatório" id="formNome" />
+
+				<p:outputLabel value="CPF: " for="formCPF" />
+				<p:inputText value="#{pessoaBean.pessoa.cpf}" size="30"
+					maxlength="50" required="true" requiredMessage="CPF é obrigatório"
+					id="formCPF" />
+
+				<p:outputLabel value="RG: " for="formRG" />
+				<p:inputText value="#{pessoaBean.pessoa.rg}" size="30"
+					maxlength="50" required="true"
+					requiredMessage="Identidade é obrigatório" id="formRG" />
+
+				<p:outputLabel value="Rua: " for="formRua" />
+				<p:inputText value="#{pessoaBean.pessoa.rua}" size="30"
+					maxlength="50" required="true" requiredMessage="Rua é obrigatório"
+					id="formRua" />
+
+				<p:outputLabel value="Nr: " />
+				<p:inputText value="#{pessoaBean.pessoa.numero}" size="5"
+					maxlength="10" converterMessage="Valor inválido"
+					validatorMessage="O menor valor é 1">
+					<f:validateLongRange minimum="1" />
+				</p:inputText>
+
+				<p:outputLabel value="CEP: " for="formCEP" />
+				<p:inputText value="#{pessoaBean.pessoa.cep}" size="30"
+					maxlength="50" required="true"
+					requiredMessage="Identidade é obrigatório" id="formCEP" />
+
+				<p:outputLabel value="Complemento: " />
+				<p:inputText value="#{pessoaBean.pessoa.complemento}" size="30"
+					maxlength="50" />
+
+				<p:outputLabel value="Telefone: " />
+				<p:inputText value="#{pessoaBean.pessoa.telefone}" size="30"
+					maxlength="50" />
+
+				<p:outputLabel value="Celular: " />
+				<p:inputText value="#{pessoaBean.pessoa.celular}" size="30"
+					maxlength="50" />
+
+				<p:outputLabel value="Email: " />
+				<p:inputText value="#{pessoaBean.pessoa.email}" size="30"
+					maxlength="50" />
+
+				<!-- DropDownBox Cidade -->
+				<p:outputLabel value="Cidade: " for="formCidade" />
+
+				<p:selectOneMenu filter="true" value="#{pessoaBean.cidades}"
+					required="true" converter="omnifaces.SelectItemsConverter"
+					requiredMessage="Selecionar uma Cidade" id="formCidade">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione uma Cidade" />
+					<f:selectItems value="#{pessoaBean.cidades}" var="cidade"
+						itemValue="#{cidade}" itemLabel="#{cidade.nome}" />
+				</p:selectOneMenu>
+
+				<!-- DropDownBox Estado -->
+				<p:outputLabel value="Estado: " for="formEstado" />
+
+				<p:selectOneMenu id="formEstado" filter="true"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					value="#{pessoaBean.estados}"
+					requiredMessage="Selecionar um Estado">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Estado" />
+					<f:selectItems value="#{pessoaBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome}" />
+				</p:selectOneMenu>
+
+
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="SALVAR"
+					actionListener="#{pessoaBean.salvar()}"
+					update=":msgGrowl :formLista:tableLista :formCadastro:gridCadastro" />
+				<p:commandButton value="CANCELAR"
+					oncomplete="PF('dlgPessoa').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

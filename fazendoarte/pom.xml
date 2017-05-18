@@ -67,6 +67,28 @@
 			<version>6.1</version>
 		</dependency>
 
+		<!-- OminiFaces -->
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>1.14</version>
+		</dependency>
+
+		<!-- Servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+
+		<!-- WildFly -->
+		<!-- BootStrap Thema -->
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>1.0.10</version>
+		</dependency>
+
 
 	</dependencies>
 

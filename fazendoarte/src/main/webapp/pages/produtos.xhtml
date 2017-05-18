@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Produtos</title>
+</h:head>
+<h:body>
+	<p:growl id="msgGrowl" />
+	<h:form id="formLista">
+		<p:panel header="Produtos - Listagem">
+			<p:dataTable emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{produtoBean.produtos}" var="produto"
+				rows="5" id="tableLista">
+				<!-- Botoes Novo -->
+				<f:facet name="header">
+					<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
+						oncomplete="PF('dlgProduto').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+				<f:facet name="footer">
+					<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
+						oncomplete="PF('dlgProduto').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+
+				<p:column headerText="Código" sortBy="#{produto.codigo}"
+					filterBy="#{produto.codigo}">
+					<h:outputText value="#{produto.codigo}" />
+				</p:column>
+				<p:column headerText="Descrição" sortBy="#{produto.descricao}"
+					filterBy="#{produto.descricao}">
+					<h:outputText value="#{produto.descricao}" />
+				</p:column>
+				<p:column headerText="Quantidade" sortBy="#{produto.quanditade}"
+					filterBy="#{produto.quanditade}">
+					<h:outputText value="#{produto.quanditade}">
+					
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Preço" sortBy="#{produto.preco}"
+					filterBy="#{produto.preco}">
+					<h:outputText value="#{produto.preco}">
+					<f:convertNumber locale="pt_BR" minFractionDigits="2" maxFractionDigits="2"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Fabricante"
+					sortBy="#{produto.fabricante.descricao}"
+					filterBy="#{produto.fabricante.descricao}">
+					<h:outputText value="#{produto.fabricante.descricao}" />
+				</p:column>
+
+				<!-- Botões Editar e Excluir -->
+				<p:column headerText="Opções">
+					<p:commandButton value="Editar"
+						actionListener="#{produtoBean.editar}"
+						oncomplete="PF('dlgProduto').show();"
+						update=":formCadastro:gridCadastro :msgGrowl">
+						<f:attribute name="produtoEditar" value="#{produto}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+
+					<p:commandButton value="Excluir"
+						actionListener="#{produtoBean.excluir}"
+						update="formLista:tableLista :msgGrowl">
+						<p:confirm header="Alerta"
+							message="Deseja excluir #{produto.descricao}?"
+							icon="ui-icon-alert" />
+						<f:attribute name="produtoExcluir" value="#{produto}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<!-- Diálogo de Confirmação -->
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</p:panel>
+	</h:form>
+	<p:dialog header="Produto - Cadastro" widgetVar="dlgProduto"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<!-- Cadastro novos Produtos -->
+		<h:form id="formCadastro">
+			<h:panelGrid columns="2" id="gridCadastro">
+				<p:outputLabel value="Descrição: " for="formDescricao" />
+				<p:inputText value="#{produtoBean.produto.descricao}" size="30"
+					maxlength="50" required="true"
+					requiredMessage="Descrição do Produto Obrigatória"
+					id="formDescricao" />
+				<p:outputLabel value="Quantidade: " />
+				<p:inputText value="#{produtoBean.produto.quanditade}" size="5"
+					maxlength="10" converterMessage="Valor inválido"
+					validatorMessage="A menor quantidade é zero" required="true">
+					<f:validateLongRange minimum="0" />
+				</p:inputText>
+				<p:outputLabel value="Preço: " />
+				<p:inputText value="#{produtoBean.produto.preco}" size="7"
+					maxlength="10" converterMessage="Valor inválido"
+					validatorMessage="Preço maior que zero" required="true">
+					<f:validateDoubleRange minimum="0.01" />
+					<f:convertNumber locale="pt_BR" maxFractionDigits="2"/>
+				</p:inputText>
+				<p:outputLabel value="Fabricante: " for="nm_fabricante" />
+
+				<!-- DropDownBox Fabricantes -->
+				<p:selectOneMenu filter="true"
+					value="#{produtoBean.produto.fabricante}" required="true"
+					converter="omnifaces.SelectItemsConverter"
+					requiredMessage="Selecionar um Fabricante" id="nm_fabricante">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Fabricante" />
+					<f:selectItems value="#{produtoBean.fabricantes}" var="fabricante"
+						itemValue="#{fabricante}" itemLabel="#{fabricante.descricao}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="SALVAR"
+					actionListener="#{produtoBean.salvar()}"
+					update=":msgGrowl :formLista:tableLista :formCadastro:gridCadastro" />
+				<p:commandButton value="CANCELAR"
+					oncomplete="PF('dlgProduto').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

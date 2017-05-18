@@ -9,34 +9,77 @@
 	<title>Fabricantes</title>
 </h:head>
 <h:body>
-	<h:form>
+	<p:growl id="msgGrowl" />
+	<h:form id="formLista">
 		<p:panel header="Fabricantes - Listagem">
 			<p:dataTable emptyMessage="Nenhum registro encontrado."
-				paginator="true">
+				paginator="true" rows="5" value="#{fabricanteBean.fabricantes}"
+				var="fabricante" id="tableLista">
 				<f:facet name="header">
-					<p:commandButton value="Novo" oncomplete="PF('dlgFabricante').show();" />
+					<p:commandButton value="Novo"
+						oncomplete="PF('dlgFabricante').show();"
+						actionListener="#{fabricanteBean.novo}"
+						update=":msgGrowl :formCadastro:gridCadastro :formLista:tableLista" />
 				</f:facet>
 				<f:facet name="footer">
-					<p:commandButton value="Novo" oncomplete="PF('dlgFabricante').show();" />
+					<p:commandButton value="Novo"
+						oncomplete="PF('dlgFabricante').show();"
+						actionListener="#{fabricanteBean.novo}"
+						update=":msgGrowl :formCadastro:gridCadastro :formLista:tableLista" />
 				</f:facet>
-				<p:column headerText="Nome"></p:column>
-				<p:column headerText="Opções"></p:column>
+				<p:column headerText="Código" sortBy="#{fabricante.codigo}"
+					filterBy="#{fabricante.codigo}">
+					<h:outputText value="#{fabricante.codigo}" />
+				</p:column>
+				<p:column headerText="Descrição" sortBy="#{fabricante.descricao}"
+					filterBy="#{fabricante.descricao}">
+					<h:outputText value="#{fabricante.descricao}" />
+				</p:column>
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{fabricanteBean.excluir}"
+						update=":msgGrowl :formCadastro:gridCadastro :formLista:tableLista">
+						<p:confirm header="Alerta"
+							message="Deseja excluir #{fabricante.descricao}?"
+							icon="ui-icon-alert" />
+						<f:attribute name="fabricanteExcluir" value="#{fabricante}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{fabricanteBean.editar}"
+						oncomplete="PF('dlgFabricante').show();"
+						update=":msgGrowl :formCadastro:gridCadastro :formLista:tableLista">
+						<f:attribute name="fabricanteEditar" value="#{fabricante}" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
 		</p:panel>
 	</h:form>
+
 	<p:dialog header="Fabricante - Cadastro" widgetVar="dlgFabricante"
-		draggable="false" resizable="false" modal="true" closable="false">
-		<h:form>
-			<h:panelGrid columns="2">
+		draggable="true" resizable="false" modal="true" closable="false">
+		<h:form id="formCadastro">
+			<h:panelGrid columns="2" id="gridCadastro">
 				<p:outputLabel value="Descrição: " />
-				<p:inputText value="" size="30" maxlength="50" />				
+				<p:inputText value="#{fabricanteBean.fabricante.descricao}"
+					size="30" maxlength="50" />
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton value="SALVAR" />
+				<p:commandButton value="SALVAR"
+					actionListener="#{fabricanteBean.salvar()}"
+					update=":msgGrowl :formCadastro:gridCadastro :formLista:tableLista" />
 				<p:commandButton value="CANCELAR"
 					oncomplete="PF('dlgFabricante').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>
+
 </h:body>
 </html>
